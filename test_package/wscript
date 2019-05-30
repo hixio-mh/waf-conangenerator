@@ -8,8 +8,7 @@ def options(opt):
 
 def configure(conf):
     conf.load('compiler_cxx')
-
     conf.load('conanbuildinfo_waf', tooldir=[".", conf.bldnode.abspath()]);
 
 def build(bld):
-    bld.program(source='example.cpp', target='example', use='Hello')
+    bld.program(source='example.cpp', target='example', use='zlib')

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from conans import ConanFile, CMake, ConfigureEnvironment
+from conans import ConanFile
 import os
 
 name     = "WafGenerator"
@@ -12,11 +12,9 @@ channel  = os.getenv("CONAN_CHANNEL", "testing")
 class ExampleConanFile(ConanFile):
     build_policy = "missing"
     settings = "os", "compiler", "build_type", "arch"
-    
     requires = (
         "%s/%s@%s/%s" % (name, version, username, channel),
-        
-        "Hello/0.1@memsharded/testing",
+        "zlib/1.2.11@conan/stable",
     )
 
     generators = "Waf"
@@ -26,8 +24,7 @@ class ExampleConanFile(ConanFile):
         self.copy("*.dylib*", dst="bin", src="lib") # From lib to bin
 
     def build(self):
-        waf = os.path.join(".", "waf")
-        self.run("'%s' configure build -o '%s'" % (waf, os.getcwd()), cwd=self.conanfile_directory)
+        self.run("python waf configure build -o \"%s\"" % os.getcwd() , cwd=self.source_folder)
 
     def test(self):
         self.run("pwd")
