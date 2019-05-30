@@ -12,10 +12,10 @@ from conans import ConanFile
 
 class WafGeneratorPackage(ConanFile):
 	name        = "WafGenerator"
-	version     = "0.0.3"
+	version     = "0.0.4"
 	description = "Conan generator for waf projects. Allows including conan dependencies in wscripts."
-	url         = "https://github.com/paulobrizolara/waf-conangenerator"
-	author      = "Paulo Brizolara (paulobrizolara@tuta.io)"
+	url         = "https://github.com/FWGS/waf-conangenerator"
+	author      = "Paulo Brizolara (paulobrizolara@tuta.io) & Alibek Omarov (a1ba.omarov@gmail.com)"
 	license     = "MIT"
 	exports     = "waf_generator.py"
 
