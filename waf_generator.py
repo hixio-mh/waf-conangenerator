@@ -5,6 +5,9 @@ import conans
 from conans.model import Generator
 from collections import OrderedDict
 
+def escape_backslash(str):
+	return str.replace('\\', '\\\\')
+
 class WafGenerator(Generator):
 	NAMES_MAP = {
 		'include_paths' : 'INCLUDES',
@@ -58,7 +61,7 @@ class WafGenerator(Generator):
 		counter = 0
 		if wafConfigs:
 			for depName, deps in wafConfigs.items():
-			counter += self.write_dep(depName, deps, out)
+				counter += self.write_dep(depName, deps, out)
 
 		return counter
 
@@ -74,7 +77,11 @@ class WafGenerator(Generator):
 			out.write(u'=[')
 
 			#Require that value be an list
-			valuesList = [('"'+ v + '"') for v in value]
+			valuesList = []
+			for v in value:
+				# replace backslash by two backslashes to escape path string on Win32
+				v = "\"%s\"" % escape_backslash(v)
+				valuesList += [ v ]
 			out.write(u", ".join(valuesList))
 			out.write(u']\n')
 
